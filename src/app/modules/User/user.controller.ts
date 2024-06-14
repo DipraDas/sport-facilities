@@ -4,7 +4,7 @@ import sendResponse from "../../utils/sendResponse";
 import { UserServices } from "./user.service";
 
 const createAdmin = catchAsync(async (req, res) => {
-    const { payload } = req.body;
+    const payload = req.body;
 
     const result = await UserServices.createAdminIntoDB(payload);
 

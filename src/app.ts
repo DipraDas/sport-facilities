@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import router from "./app/routes";
+import globalErrorHandler from "./app/middleware/globalErrorHandler";
 const app: Application = express();
 
 // parser
@@ -11,7 +12,9 @@ app.use(cors({
     origin: ['http://localhost:5173']
 }));
 
-app.use('/api/v1', router);
+app.use('/api', router);
+
+app.use(globalErrorHandler);
 
 
 app.get("/", (req: Request, res: Response) => {

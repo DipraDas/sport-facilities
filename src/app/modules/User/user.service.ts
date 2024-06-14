@@ -5,7 +5,6 @@ import { User } from "./user.model";
 
 const createAdminIntoDB = async (payload: TUser) => {
     try {
-
         const newAdmin = await User.create(payload);
         if (!newAdmin) {
             throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create admin');
