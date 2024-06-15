@@ -53,8 +53,25 @@ const createBookingIntoDB = async (userId: string, payload: TBooking) => {
     }
 };
 
+const deleteBookingForUserFromDB = async (id: string) => {
+    const isBookingExists = await Booking.findById(id);
+    if (!isBookingExists) {
+        throw new AppError(httpStatus.NOT_FOUND, "Booking does not exists");
+    }
+
+    const result = await Booking.findByIdAndUpdate(
+        id,
+        {
+            isBooked: 'canceled'
+        },
+        { new: true, runValidators: true }
+    ).populate("facility");
+    return result;
+};
+
 export const BookingService = {
     getAllBookingsFromDB,
     createBookingIntoDB,
-    singleUsersBookingsFromDB
+    singleUsersBookingsFromDB,
+    deleteBookingForUserFromDB
 }

@@ -23,15 +23,10 @@ router.post('/',
     BookingController.createBooking
 );
 
-// router.put('/:id',
-//     auth(USER_ROLE.admin),
-//     validateRequest(FacilityValidation.facilityUpdateValidationSchema),
-//     FacilityController.updateFacility
-// );
-
-// router.delete('/:id',
-//     auth(USER_ROLE.admin),
-//     FacilityController.deleteFacility
-// );
+router.delete(
+    "/:id",
+    auth(USER_ROLE.user),
+    BookingController.deleteBookingForUser
+);
 
 export const BookingRoutes = router;

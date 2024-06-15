@@ -5,13 +5,21 @@ import sendResponse from "../../utils/sendResponse";
 
 const getAllFacility = catchAsync(async (req, res) => {
     const result = await FacilitySecvice.getFacultiesFromDB();
-
-    sendResponse(res, {
-        statusCode: httpStatus.OK,
-        success: true,
-        message: 'Facilities retrieved successfully',
-        data: result
-    });
+    if (result.length) {
+        sendResponse(res, {
+            statusCode: httpStatus.OK,
+            success: true,
+            message: 'Facilities retrieved successfully',
+            data: result
+        });
+    } else {
+        sendResponse(res, {
+            success: false,
+            statusCode: httpStatus.NOT_FOUND,
+            message: "No data found!",
+            data: result,
+        });
+    }
 });
 const createFacility = catchAsync(async (req, res) => {
     const payload = req.body;
