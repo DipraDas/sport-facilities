@@ -5,7 +5,7 @@ export type TBooking = {
     date: string,
     startTime: string,
     endTime: string,
-    user?: string,
+    user?: Types.ObjectId,
     payableAmount?: number,
     isBooked: 'confirmed' | 'canceled';
 } 

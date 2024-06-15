@@ -12,6 +12,11 @@ router.get('/',
     BookingController.getBooking
 );
 
+router.get('/user',
+    auth(USER_ROLE.user),
+    BookingController.getSingleUsersBooking
+);
+
 router.post('/',
     auth(USER_ROLE.user),
     validateRequest(BookingValidation.bookingValidationSchema),

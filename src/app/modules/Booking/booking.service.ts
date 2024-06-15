@@ -5,10 +5,22 @@ import { Booking } from "./Booking.model";
 import { Facility } from "../Facility/facility.model";
 import { calculateTimeExpression } from "./booking.utils";
 
-
 const getAllBookingsFromDB = async () => {
     try {
-        const allBooking = await Booking.find().populate('facility').populate('user')
+        const allBooking = await Booking
+            .find()
+            .populate('facility')
+            .populate('user')
+
+        return allBooking;
+
+    } catch (err: any) {
+        throw new Error(err);
+    }
+}
+const singleUsersBookingsFromDB = async (userId: string) => {
+    try {
+        const allBooking = await Booking.find({ user: userId }).populate('facility').populate('user')
         return allBooking;
 
     } catch (err: any) {
@@ -43,5 +55,6 @@ const createBookingIntoDB = async (userId: string, payload: TBooking) => {
 
 export const BookingService = {
     getAllBookingsFromDB,
-    createBookingIntoDB
+    createBookingIntoDB,
+    singleUsersBookingsFromDB
 }
