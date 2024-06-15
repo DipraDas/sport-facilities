@@ -2,6 +2,9 @@ import httpStatus from "http-status";
 import AppError from "../../errors/appError";
 import { TUser } from "../User/user.interface";
 import { User } from "../User/user.model";
+import { TLoginUser } from "./auth.interface";
+import { createToken } from "./auth.utils";
+import config from "../../config";
 
 
 const createUserIntoDB = async (payload: TUser) => {
@@ -21,6 +24,41 @@ const createUserIntoDB = async (payload: TUser) => {
     }
 };
 
+const loginUser = async (payload: TLoginUser) => {
+    try {
+        const isUserExists = await User.findOne({ email: payload.email })
+        if (!isUserExists) {
+            throw new AppError(httpStatus.NOT_FOUND, 'This user not found')
+        }
+
+        const jwtPayload = {
+            userId: isUserExists.email,
+            role: isUserExists.role
+        }
+
+        const accessToken = createToken(
+            jwtPayload,
+            config.jwt_secret as string,
+            config.jwt_access_expires_in as string
+        )
+
+        const refreshToken = createToken(
+            jwtPayload,
+            config.jwt_refresh_secret as string,
+            config.jwt_refresh_expires_in as string
+        )
+
+        return {
+            isUserExists,
+            accessToken,
+            refreshToken
+        }
+    } catch (err: any) {
+        throw new Error(err);
+    }
+}
+
 export const AuthServices = {
-    createUserIntoDB
+    createUserIntoDB,
+    loginUser
 }
