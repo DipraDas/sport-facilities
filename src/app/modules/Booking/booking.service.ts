@@ -8,7 +8,7 @@ import { calculateTimeExpression } from "./booking.utils";
 
 const getAllBookingsFromDB = async () => {
     try {
-        const allBooking = await Booking.find()
+        const allBooking = await Booking.find().populate('facility').populate('user')
         return allBooking;
 
     } catch (err: any) {

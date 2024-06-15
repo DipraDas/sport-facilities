@@ -1,12 +1,14 @@
 import { Schema, model } from "mongoose";
 import { TBooking } from "./booking.interface";
+import { User } from "../User/user.model";
 
 const timeFormat = /^([01]\d|2[0-3]):([0-5]\d)$/;
 
 const booking = new Schema<TBooking>({
     facility: {
         type: Schema.Types.ObjectId,
-        required: true
+        required: true,
+        ref: "Facility"
     },
     date: {
         type: String,
@@ -33,7 +35,8 @@ const booking = new Schema<TBooking>({
         }
     },
     user: {
-        type: String
+        type: Schema.Types.ObjectId,
+        ref: "User"
     },
     payableAmount: {
         type: Number
