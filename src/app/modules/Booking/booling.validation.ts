@@ -27,7 +27,7 @@ const bookingValidationSchema = z.object({
             .regex(timeFormat, { message: 'End Time must be in HH:mm format.' })
     }).refine(data => isTimeLessThan(data.startTime, data.endTime), {
         message: 'Start Time must be less than End Time.',
-        path: ['startTime', 'endTime'] // This specifies where the error message should appear
+        path: ['startTime', 'endTime']
     })
 });
 

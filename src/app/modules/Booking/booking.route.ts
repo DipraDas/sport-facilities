@@ -7,9 +7,10 @@ import { BookingController } from './booking.controller';
 
 const router = express.Router();
 
-// router.get('/',
-//     FacilityController.getAllFacility
-// );
+router.get('/',
+    auth(USER_ROLE.admin),
+    BookingController.getBooking
+);
 
 router.post('/',
     auth(USER_ROLE.user),

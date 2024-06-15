@@ -47,4 +47,9 @@ const booking = new Schema<TBooking>({
     { versionKey: false }
 )
 
+booking.pre("find", function (next) {
+    this.find({ isBooked: 'confirmed' });
+    next();
+});
+
 export const Booking = model<TBooking>('Booking', booking);

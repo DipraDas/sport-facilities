@@ -9,8 +9,8 @@ const notFound = (
     return res.status(httpStatus.NOT_FOUND)
         .json({
             success: false,
-            message: 'Api not found!!',
-            error: ''
+            statusCode: 404,
+            message: "Not Found",
         })
 }
 

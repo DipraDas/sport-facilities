@@ -5,6 +5,17 @@ import { Booking } from "./Booking.model";
 import { Facility } from "../Facility/facility.model";
 import { calculateTimeExpression } from "./booking.utils";
 
+
+const getAllBookingsFromDB = async () => {
+    try {
+        const allBooking = await Booking.find()
+        return allBooking;
+
+    } catch (err: any) {
+        throw new Error(err);
+    }
+}
+
 const createBookingIntoDB = async (userId: string, payload: TBooking) => {
     try {
 
@@ -31,5 +42,6 @@ const createBookingIntoDB = async (userId: string, payload: TBooking) => {
 };
 
 export const BookingService = {
+    getAllBookingsFromDB,
     createBookingIntoDB
 }
