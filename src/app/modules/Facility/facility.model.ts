@@ -28,4 +28,9 @@ const facility = new Schema<TFacility>({
     { versionKey: false }
 )
 
+facility.pre('find', function (next) {
+    this.find({ isDeleted: { $ne: true } });
+    next();
+});
+
 export const Facility = model<TFacility>('Facility', facility);

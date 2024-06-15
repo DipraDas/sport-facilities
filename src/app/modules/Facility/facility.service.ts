@@ -3,6 +3,16 @@ import AppError from "../../errors/appError";
 import { TFacility } from "./facility.interface";
 import { Facility } from "./facility.model";
 
+const getFacultiesFromDB = async () => {
+    try {
+        const allFaculty = await Facility.find()
+        return allFaculty;
+
+    } catch (err: any) {
+        throw new Error(err);
+    }
+};
+
 const createFacilityIntoDB = async (payload: TFacility) => {
     try {
         const isFacility = await Facility.findOne({ email: payload.name })
@@ -20,7 +30,63 @@ const createFacilityIntoDB = async (payload: TFacility) => {
         throw new Error(err);
     }
 };
+const updateFacilityIntoDB = async (
+    id: string,
+    payload: Partial<TFacility>
+) => {
+    try {
+        const isFacility = await Facility.findById(id)
+
+        if (!isFacility) {
+            throw new AppError(httpStatus.NOT_FOUND, 'This facility is not available.')
+        }
+
+        if (isFacility.isDeleted) {
+            throw new AppError(httpStatus.NOT_FOUND, 'This facility is not available.')
+        }
+
+        const result = await Facility.findByIdAndUpdate(
+            id,
+            payload,
+            {
+                new: true,
+                runValidators: true
+            }
+        );
+
+        return result;
+
+    } catch (err: any) {
+        throw new Error(err);
+    }
+};
+
+const deleteFacilityFromDB = async (
+    id: string
+) => {
+    try {
+        const isFacility = await Facility.findById(id)
+
+        if (!isFacility) {
+            throw new AppError(httpStatus.NOT_FOUND, 'This facility is not available.')
+        }
+
+        if (isFacility.isDeleted) {
+            throw new AppError(httpStatus.NOT_FOUND, 'This facility is not available.')
+        }
+
+        const result = await Facility.findByIdAndDelete(id);
+
+        return result;
+
+    } catch (err: any) {
+        throw new Error(err);
+    }
+};
 
 export const FacilitySecvice = {
-    createFacilityIntoDB
+    getFacultiesFromDB,
+    createFacilityIntoDB,
+    updateFacilityIntoDB,
+    deleteFacilityFromDB
 }
