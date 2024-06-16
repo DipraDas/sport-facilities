@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 // Regular expression to match the HH:mm time format
-const timeFormat = /^([01]\d|2[0-3]):([0-5]\d)$/;
+const timeFormat = /^(?:([01]\d|2[0-3]):([0-5]\d)|24:00)$/;
 
 // Regular expression to match the YYYY-MM-DD date format
 const dateFormat = /^\d{4}-\d{2}-\d{2}$/;

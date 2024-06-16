@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 import { TBooking } from "./booking.interface";
 
-const timeFormat = /^([01]\d|2[0-3]):([0-5]\d)$/;
+const timeFormat = /^(?:([01]\d|2[0-3]):([0-5]\d)|24:00)$/;
 
 const booking = new Schema<TBooking>({
     facility: {
