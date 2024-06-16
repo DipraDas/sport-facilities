@@ -1,6 +1,5 @@
 import { Schema, model } from "mongoose";
 import { TBooking } from "./booking.interface";
-import { User } from "../User/user.model";
 
 const timeFormat = /^([01]\d|2[0-3]):([0-5]\d)$/;
 

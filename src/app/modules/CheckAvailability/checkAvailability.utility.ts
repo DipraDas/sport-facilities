@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 export function getTodayDate() {
     const today = new Date();
     const year = today.getFullYear();
@@ -10,7 +12,7 @@ export const getAvailableSlots = (bookedSlots: any) => {
     const dayStart = "00:00";
     const dayEnd = "24:00";
 
-    let availableSlots = [];
+    const availableSlots = [];
 
     if (bookedSlots.length === 0) {
         return [

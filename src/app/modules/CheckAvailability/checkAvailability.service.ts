@@ -1,12 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { Booking } from "../Booking/Booking.model";
 import { getAvailableSlots, getTodayDate } from "./checkAvailability.utility";
-
-
 
 const getAvailableBooking = async (userId: string, date: string) => {
     try {
 
-        const today = getTodayDate();
         const targetDate = date || getTodayDate();
 
         const allBookings = await Booking.find({
