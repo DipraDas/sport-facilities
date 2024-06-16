@@ -6,7 +6,6 @@ import { CheckAvailabilityController } from './checkAvailability.controller';
 const router = express.Router();
 
 router.get('/',
-    auth(USER_ROLE.user),
     CheckAvailabilityController.getAllAvailableBooking
 );
 

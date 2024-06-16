@@ -22,7 +22,7 @@ const getAllBookingsFromDB = async () => {
 }
 const singleUsersBookingsFromDB = async (userId: string) => {
     try {
-        const allBooking = await Booking.find({ user: userId }).populate('facility').populate('user')
+        const allBooking = await Booking.find({ user: userId }).populate('facility')
         return allBooking;
 
     } catch (err: any) {
