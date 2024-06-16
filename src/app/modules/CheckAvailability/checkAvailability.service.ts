@@ -3,13 +3,12 @@
 import { Booking } from "../Booking/Booking.model";
 import { getAvailableSlots, getTodayDate } from "./checkAvailability.utility";
 
-const getAvailableBooking = async (userId: string, date: string) => {
+const getAvailableBooking = async (date: string) => {
     try {
 
         const targetDate = date || getTodayDate();
 
         const allBookings = await Booking.find({
-            user: userId,
             date: targetDate
         })
         const bookedSlots = allBookings.map(booking => ({

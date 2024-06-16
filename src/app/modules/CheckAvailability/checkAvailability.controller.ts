@@ -4,9 +4,8 @@ import sendResponse from "../../utils/sendResponse";
 import { AvailableBookingSecvice } from "./checkAvailability.service";
 
 const getAllAvailableBooking = catchAsync(async (req, res) => {
-    const userId = req.user.id;
     const { date } = req.query;
-    const result = await AvailableBookingSecvice.getAvailableBooking(userId, date as string);
+    const result = await AvailableBookingSecvice.getAvailableBooking(date as string);
     if (result.length) {
         sendResponse(res, {
             statusCode: httpStatus.OK,
