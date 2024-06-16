@@ -8,13 +8,13 @@ export function getTodayDate() {
     return `${year}-${month}-${day}`;
 }
 
-export const getAvailableSlots = (bookedSlots: any) => {
+export const getAvailableSlots = (detailsOfBookingSlot: any) => {
     const dayStart = "00:00";
     const dayEnd = "24:00";
 
-    const availableSlots = [];
+    const availableSlotsArray = [];
 
-    if (bookedSlots.length === 0) {
+    if (detailsOfBookingSlot.length === 0) {
         return [
             {
                 startTime: dayStart,
@@ -23,33 +23,33 @@ export const getAvailableSlots = (bookedSlots: any) => {
         ];
     }
 
-    bookedSlots.sort((a: any, b: any) => a.startTime.localeCompare(b.startTime));
+    detailsOfBookingSlot.sort((a: any, b: any) => a.startTime.localeCompare(b.startTime));
 
     // Check for free slot before the first booking
-    if (dayStart < bookedSlots[0].startTime) {
-        availableSlots.push({
+    if (dayStart < detailsOfBookingSlot[0].startTime) {
+        availableSlotsArray.push({
             startTime: dayStart,
-            endTime: bookedSlots[0].startTime
+            endTime: detailsOfBookingSlot[0].startTime
         });
     }
 
     // Check for free slots between bookings
-    for (let i = 0; i < bookedSlots.length - 1; i++) {
-        if (bookedSlots[i].endTime < bookedSlots[i + 1].startTime) {
-            availableSlots.push({
-                startTime: bookedSlots[i].endTime,
-                endTime: bookedSlots[i + 1].startTime
+    for (let i = 0; i < detailsOfBookingSlot.length - 1; i++) {
+        if (detailsOfBookingSlot[i].endTime < detailsOfBookingSlot[i + 1].startTime) {
+            availableSlotsArray.push({
+                startTime: detailsOfBookingSlot[i].endTime,
+                endTime: detailsOfBookingSlot[i + 1].startTime
             });
         }
     }
 
     // Check for free slot after the last booking
-    if (bookedSlots[bookedSlots.length - 1].endTime < dayEnd) {
-        availableSlots.push({
-            startTime: bookedSlots[bookedSlots.length - 1].endTime,
+    if (detailsOfBookingSlot[detailsOfBookingSlot.length - 1].endTime < dayEnd) {
+        availableSlotsArray.push({
+            startTime: detailsOfBookingSlot[detailsOfBookingSlot.length - 1].endTime,
             endTime: dayEnd
         });
     }
 
-    return availableSlots;
+    return availableSlotsArray;
 };

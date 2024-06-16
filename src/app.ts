@@ -16,10 +16,11 @@ app.use(cors({
 app.use('/api', router);
 
 app.use(globalErrorHandler);
-app.use(notFound);
 
 app.get("/", (req: Request, res: Response) => {
-    res.send("hello world");
+    res.send("Sport Facility Project running");
 });
+
+app.use(notFound);
 
 export default app;
