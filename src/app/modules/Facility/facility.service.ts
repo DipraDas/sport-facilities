@@ -67,18 +67,20 @@ const deleteFacilityFromDB = async (
     id: string
 ) => {
     try {
-        const isFacility = await Facility.findById(id)
 
-        if (!isFacility) {
-            throw new AppError(httpStatus.NOT_FOUND, 'This facility is not available.')
+        const isFacilityExists = await Facility.findById(id);
+        if (!isFacilityExists) {
+            throw new AppError(httpStatus.NOT_FOUND, "This facilty does not exists!");
         }
 
-        if (isFacility.isDeleted) {
-            throw new AppError(httpStatus.NOT_FOUND, 'This facility is not available.')
-        }
-
-        const result = await Facility.findByIdAndDelete(id);
-
+        const result = await Facility.findByIdAndUpdate(
+            id,
+            { isDeleted: true },
+            {
+                new: true,
+                runValidators: true,
+            }
+        );
         return result;
 
     } catch (err: any) {

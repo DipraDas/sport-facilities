@@ -10,16 +10,18 @@ import { User } from "../modules/User/user.model";
 const auth = (...requiredRoles: TUserRole[]) => {
     return catchAsync(
         async (req: Request, res: Response, next: NextFunction) => {
-            const token = req.headers.authorization;
+            const authorizationHeader = req.headers.authorization;
 
             // If the token is sent from the client
-            if (!token) {
+            if (!authorizationHeader) {
                 return res.status(httpStatus.UNAUTHORIZED).json({
                     success: false,
                     statusCode: httpStatus.UNAUTHORIZED,
                     message: "You have no access to this route",
                 });
             }
+
+            const token = authorizationHeader.slice(7, authorizationHeader.length).trim();
 
             const decoded = jwt.verify(token, config.jwt_secret as string) as JwtPayload;
 
@@ -41,7 +43,6 @@ const auth = (...requiredRoles: TUserRole[]) => {
             req.user = decoded as JwtPayload;
             next();
 
-            // Check if the token is valid
         }
     )
 }
